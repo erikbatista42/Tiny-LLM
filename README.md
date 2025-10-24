@@ -1,5 +1,11 @@
 # Tiny LLM
 
+## Table of Contents
+- [1. Corpus Creation](#1-corpus-creation)
+- [2. Creating a Tokenizer](#2-creating-a-tokenizer)
+
+---
+
 ## 1. Corpus Creation
 
 The 1st step in creating an LLM is creating a corpus.
