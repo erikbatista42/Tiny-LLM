@@ -9,7 +9,7 @@ def download_corpus():
 
     if response.status_code == 200:
         # Save the content to a file
-        with open("input.txt", "w", encoding="utf-8") as file:
+        with open("corpus.txt", "w", encoding="utf-8") as file:
             file.write(response.text)
         text = response.text
         print("File downloaded successfully.")
