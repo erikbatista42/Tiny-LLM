@@ -9,6 +9,8 @@ This project breaks down the complex process of creating an LLM into easy-to-fol
 ### [Step 1: Corpus Creation](STEP_1_CORPUS.md)
 Learn how to gather and prepare high-quality text data that will serve as the foundation for your LLM. We'll download the Tiny Shakespeare dataset and understand what makes a good corpus.
 
+The Tiny Shakespeare dataset we're going to be using is small and already cleaned, which is perfect for learning. 
+
 **What you'll learn:**
 - What is a corpus and why it matters
 - How to download and prepare training data
@@ -17,7 +19,7 @@ Learn how to gather and prepare high-quality text data that will serve as the fo
 ---
 
 ### [Step 2: Creating a Tokenizer](STEP_2_TOKENIZER.md)
-Understand how to convert text into numbers that neural networks can process. You'll build a character-level tokenizer from scratch.
+Understand how to convert text into numbers. There are different ways to create a tokenizer. You'll build a "character-level" tokenizer from scratch which is easy to learn and perfect for learning.
 
 **What you'll learn:**
 - What tokenization is and why it's necessary
