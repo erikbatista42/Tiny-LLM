@@ -13,7 +13,7 @@ class LLMDataPreperation:
     5. Saving the prepared data
     """
 
-    def __init__(self, sequence_length=50, train_split=0.9):
+    def __init__(self, sequence_length=50, train_split=0.9, verbose=True):
         '''
         Parameters:
         sequence_length:
@@ -22,9 +22,14 @@ class LLMDataPreperation:
         train_split:
             fraction to use for training (rest is validation)
             Default: 90% for training, 10% for validation
+        
+        verbose:
+            If True, print progress messages. If False, run silently.
+            Default: True
         '''
         self.sequence_length = sequence_length
         self.train_split = train_split
+        self.verbose = verbose
 
         # These will be populated as we execute the methods
         self.char_to_id = None
@@ -35,8 +40,8 @@ class LLMDataPreperation:
         self.targets = None
         self.train_inputs = None
         self.train_targets = None
-        self.val_inputs = None
-        self.val_targets = None
+        self.validation_inputs = None
+        self.validation_targets = None
     
     def load_tokenizer(self, tokenizer_path="tokenizer.json"):
         '''
@@ -48,7 +53,13 @@ class LLMDataPreperation:
         
         # Rebuild the dictionaries
         self.char_to_id = tokenizer_data['char_to_id']
-        self.id_to_char = {int(k): v for k, v in tokenizer_data['id_to_char'].items()}
+        
+        # Convert id_to_char keys from strings to integers
+        # (JSON saves dictionary keys as strings, but we need them as integers)
+        self.id_to_char = {}
+        for key, value in tokenizer_data['id_to_char'].items():
+            integer_key = int(key)
+            self.id_to_char[integer_key] = value
         self.vocab_size = tokenizer_data['vocab_size']
     
     def encode_corpus(self, corpus_path="corpus.txt"):
@@ -102,17 +113,100 @@ class LLMDataPreperation:
         # Converts list to numpy arrays for more efficient training
         self.inputs = np.array(inputs_list)
         self.targets = np.array(target_list)
-            
-        print(f"✅ Created {len(self.inputs):,} training examples!")
-        print(f"📊 Input shape: {self.inputs.shape}")
-        print(f"📊 Target shape: {self.targets.shape}")
-        print()
+        
+        if self.verbose:
+            print(f"✅ Created {len(self.inputs):,} training examples!")
+            print(f"📊 Input shape: {self.inputs.shape}")
+            print(f"📊 Target shape: {self.targets.shape}")
+            print()
+    
+    def split_data(self):
+        '''
+        Step 4: Split the data into training and validation sets.
 
+        Why split the data?
+        - TRAINING: The model learns patterns from this data
+        - VALIDATION: We test on this to see if the model really learned patterns
+        -> This helps us know if the model is truly smart or just memorizing the data
+        '''
+        total_examples = len(self.inputs)
+        split_point = int(self.train_split * total_examples)
+
+        # SPLIT THE DATA AT THAT POINT
+        
+        # First part: 0-split_point = training
+        self.train_inputs = self.inputs[:split_point]
+        self.train_targets = self.targets[:split_point]
+
+        # Second part: split_point - end = validation
+        self.validation_inputs = self.inputs[split_point:]
+        self.validation_targets = self.targets[split_point:]
+
+        if self.verbose:
+            print(f"Training examples: {len(self.train_inputs)}")
+            print(f"Validation examples: {len(self.validation_inputs)}")
+
+    def save_data(self, output_path="training_data.npz"):
+        '''
+        STEP 5: Save the training and validation data to a file.
+        '''
+        # Save as compressed numpy file
+        np.savez_compressed(output_path, 
+            train_inputs=self.train_inputs,
+            train_targets=self.train_targets,
+            validation_inputs=self.validation_inputs,
+            validation_targets=self.validation_targets)
+
+        if self.verbose:
+            print("Data saved to file: training_data.npz")
+
+    def show_summary(self):
+        '''
+        Display a summary of the data preparation process.
+        '''
+        if self.verbose:
+            print(f"Vocabulary size: {self.vocab_size} characters")
+            print(f"Sequence length: {self.sequence_length} characters")
+            print(f"Total examples: {len(self.inputs):,}")
+            print(f"Training examples: {len(self.train_inputs):,}")
+            print(f"Validation examples: {len(self.validation_inputs):,}")
+            print()
+            print("✅ Data preparation complete!")
+            print("File created: - training_data.npz")
+            print("Next: Ready to build and train the LLM!")
+
+    def _decode(self, token_ids):
+        '''
+        Helper method: Convert a list of token IDs back to readable text.
+        '''
+        text = ""
+        for token_id in token_ids:
+            text += self.id_to_char[token_id]
+        return text
+    
+    def _show_examples(self, num_examples=3):
+        '''
+        Display some decoded input-target pairs to see what the model will learn from.
+        '''
+        print(f"📖 Showing {num_examples} training examples:\n")
+        
+        for i in range(num_examples):
+            input_decoded = self._decode(self.inputs[i])
+            target_decoded = self._decode(self.targets[i])
+            
+            print(f"Example {i+1}:")
+            print(f"  Input:  '{input_decoded}'")
+            print(f"  Target: '{target_decoded}'")
+            print()
 
 
 if __name__ == "__main__":
     data_prep = LLMDataPreperation()
-    data_prep.load_tokenizer()
-    data_prep.encode_corpus()
-    data_prep.create_training_examples()
-    print(data_prep.inputs)
+    data_prep.load_tokenizer() # step 1: load the tokenized data we created from from the tokenizer.json
+    data_prep.encode_corpus() # step 2: tokenize corpus
+    data_prep.create_training_examples() # step 3: create training examples
+    data_prep.split_data() # step 4: split the data into training and validation sets
+    data_prep.save_data() # step 5: save the training and validation data to a file
+    data_prep.show_summary() # step 6: show a summary of the data preparation process
+
+
