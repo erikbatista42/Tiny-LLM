@@ -194,19 +194,24 @@ class LLMDataPreperation:
             input_decoded = self._decode(self.inputs[i])
             target_decoded = self._decode(self.targets[i])
             
-            print(f"Example {i+1}:")
-            print(f"  Input:  '{input_decoded}'")
-            print(f"  Target: '{target_decoded}'")
-            print()
+            if self.verbose:
+                print(f"Example {i+1}:")
+                print(f"  Input:  '{input_decoded}'")
+                print(f"  Target: '{target_decoded}'")
+                print()
+
+    def run_full_pipeline(self):
+        '''
+        Execute the full data preparation pipeline.
+        '''
+        self.load_tokenizer() # step 1: load the tokenized data we created from from the tokenizer.json
+        self.encode_corpus() # step 2: tokenize corpus
+        self.create_training_examples() # step 3: create training examples
+        self.split_data() # step 4: split the data into training and validation sets
+        self.save_data() # step 5: save the training and validation data to a file
+        self.show_summary() # step 6: show a summary of the data preparation process
 
 
 if __name__ == "__main__":
-    data_prep = LLMDataPreperation()
-    data_prep.load_tokenizer() # step 1: load the tokenized data we created from from the tokenizer.json
-    data_prep.encode_corpus() # step 2: tokenize corpus
-    data_prep.create_training_examples() # step 3: create training examples
-    data_prep.split_data() # step 4: split the data into training and validation sets
-    data_prep.save_data() # step 5: save the training and validation data to a file
-    data_prep.show_summary() # step 6: show a summary of the data preparation process
-
-
+   data_prep = LLMDataPreperation(sequence_length=50, train_split=0.9, verbose=True)
+   data_prep.run_full_pipeline()
