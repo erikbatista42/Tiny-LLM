@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linear Regression Visual Guide</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #1b1b1b 0%, #1b1b1b 100%);
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+        h1 {
+            color: #1b1b1b;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.2em;
+        }
+        h2 {
+            color: #764ba2;
+            margin-top: 40px;
+            margin-bottom: 15px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 8px;
+        }
+        h3 {
+            color: #667eea;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        .box {
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            border-left: 5px solid;
+        }
+        .visual-box {
+            background: #f0f4ff;
+            border-color: #667eea;
+        }
+        .example-box {
+            background: #fff9e6;
+            border-color: #ffc107;
+        }
+        .warning-box {
+            background: #ffe6e6;
+            border-color: #dc3545;
+        }
+        .tip-box {
+            background: #e6f7ff;
+            border-color: #17a2b8;
+        }
+        .formula {
+            background: #f5f5f5;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+            text-align: center;
+            font-family: monospace;
+            font-size: 1.1em;
+            border: 2px solid #667eea;
+        }
+        canvas {
+            display: block;
+            margin: 20px auto;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            background: white;
+        }
+        .step {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        .highlight {
+            background: #ffeb3b;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        ul { margin-left: 20px; margin-top: 10px; }
+        li { margin: 8px 0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📊 Linear Regression: Visual Study Guide</h1>
+        <p style="text-align: center; color: #666; margin-bottom: 30px;">A complete guide for visual learners</p>
+
+        <h2>🎯 What is Linear Regression?</h2>
+        <p>Linear regression is a way to <span class="highlight">make predictions</span> based on data we already have. It finds the best straight line through scattered data points.</p>
+        
+        <div class="visual-box box">
+            <h4>📈 Visual Concept:</h4>
+            <canvas id="canvas1" width="600" height="300"></canvas>
+            <p style="text-align: center; color: #666; margin-top: 10px;">Linear regression finds the single best line that represents all the scattered data points</p>
+        </div>
+
+        <h2>💡 Why Use Linear Regression?</h2>
+        <div class="example-box box">
+            <strong>🏢 Real-World Example: Hours Worked vs. Pay</strong>
+            <ul>
+                <li>Person A: 10 hours → $150</li>
+                <li>Person B: 20 hours → $300</li>
+                <li>Person C: 30 hours → $450</li>
+                <li><strong>Prediction:</strong> Person D works 25 hours → probably earns ~$375</li>
+            </ul>
+        </div>
+
+        <h2>🔧 The Main Components</h2>
+        <div class="grid">
+            <div class="card">
+                <div style="font-size: 2em;">📋</div>
+                <strong>Dataset</strong>
+                <p style="color: #666; margin-top: 5px;">Your existing data</p>
+            </div>
+            <div class="card">
+                <div style="font-size: 2em;">📊</div>
+                <strong>Graph</strong>
+                <p style="color: #666; margin-top: 5px;">Visual plot</p>
+            </div>
+            <div class="card">
+                <div style="font-size: 2em;">📐</div>
+                <strong>y = mx + b</strong>
+                <p style="color: #666; margin-top: 5px;">The formula</p>
+            </div>
+            <div class="card">
+                <div style="font-size: 2em;">📈</div>
+                <strong>Trend Line</strong>
+                <p style="color: #666; margin-top: 5px;">Best-fit line</p>
+            </div>
+        </div>
+
+        <h2>📖 Understanding y = mx + b</h2>
+        <div class="visual-box box">
+            <h4>The Magic Formula Explained:</h4>
+            <canvas id="canvas2" width="600" height="350"></canvas>
+            <div style="margin-top: 20px;">
+                <p><strong style="color: #e74c3c;">m (slope)</strong> = How steep the line is</p>
+                <ul>
+                    <li>For every 1 step RIGHT on x → go UP (or DOWN) by m steps on y</li>
+                    <li>Positive m = upward ↗️ | Negative m = downward ↘️</li>
+                    <li>Example: If m = 2, for every 1 step right, go up 2 steps</li>
+                </ul>
+                
+                <p style="margin-top: 15px;"><strong style="color: #2ecc71;">b (y-intercept)</strong> = Where the line starts</p>
+                <ul>
+                    <li>This is the y-value when x = 0</li>
+                    <li>Where the line crosses the y-axis</li>
+                    <li>Example: If b = 1, the line starts at height 1</li>
+                </ul>
+            </div>
+        </div>
+
+        <h2>🎯 Step-by-Step Process</h2>
+
+        <div class="visual-box box">
+            <h3><span class="step">1</span>Collect and Plot Data</h3>
+            <p>Get your (x, y) data points and plot them on a graph.</p>
+            <canvas id="canvas3" width="600" height="250"></canvas>
+        </div>
+
+        <div class="visual-box box">
+            <h3><span class="step">2</span>Understanding Errors (Loss)</h3>
+            <p>We measure how "bad" a line is by looking at the vertical distance from each point to the line.</p>
+            <canvas id="canvas4" width="600" height="300"></canvas>
+            <div class="formula">
+                Total Loss = (Error₁)² + (Error₂)² + (Error₃)² + ... + (Errorₙ)²
+            </div>
+            <p><strong>Why square the errors?</strong></p>
+            <ul>
+                <li>✅ Makes all errors positive (so they don't cancel out)</li>
+                <li>✅ Punishes big errors more than small ones</li>
+                <li>✅ Gives us one number representing total "badness"</li>
+            </ul>
+        </div>
+
+        <div class="visual-box box">
+            <h3><span class="step">3</span>Calculate m and b Using the Formula</h3>
+            <p>The linear regression formula finds the m and b that give the SMALLEST total loss!</p>
+            
+            <div class="formula" style="background: #fff3cd; border-color: #ffc107;">
+                <strong>Formula for m (slope):</strong><br>
+                m = Σ[(x - x̄)(y - ȳ)] / Σ[(x - x̄)²]
+            </div>
+            
+            <div class="formula" style="background: #d1ecf1; border-color: #17a2b8;">
+                <strong>Formula for b (y-intercept):</strong><br>
+                b = ȳ - m·x̄
+            </div>
+            
+            <div style="background: #f5f5f5; padding: 15px; border-radius: 8px; margin-top: 15px;">
+                <h4>Symbol Key:</h4>
+                <ul>
+                    <li><strong>Σ</strong> = "Sum of" (add everything up)</li>
+                    <li><strong>x̄</strong> = "x bar" = average of all x values</li>
+                    <li><strong>ȳ</strong> = "y bar" = average of all y values</li>
+                    <li><strong>(x - x̄)</strong> = how far each x is from the x average</li>
+                    <li><strong>(y - ȳ)</strong> = how far each y is from the y average</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="visual-box box">
+            <h3><span class="step">4</span>Make Predictions!</h3>
+            <p>Now you can predict y for ANY new x value using your equation!</p>
+            <canvas id="canvas5" width="600" height="300"></canvas>
+            <div class="formula" style="background: #e8f5e9; border-color: #2ecc71;">
+                Example: If x = 9, then y = 2.02(9) - 0.06 = 18.12
+            </div>
+        </div>
+
+        <h2>⚡ The Two Uses of y = mx + b</h2>
+        <div class="grid">
+            <div style="background: #e8f0fe; padding: 20px; border-radius: 10px; border: 3px solid #667eea;">
+                <h3 style="color: #667eea; margin-top: 0;">USE #1: Finding m & b</h3>
+                <p><strong>Phase:</strong> Building the model</p>
+                <p><strong>Input:</strong> Your data points</p>
+                <p><strong>Process:</strong> Linear regression formula</p>
+                <p><strong>Output:</strong> Values for m and b</p>
+            </div>
+            <div style="background: #e8f5e9; padding: 20px; border-radius: 10px; border: 3px solid #2ecc71;">
+                <h3 style="color: #2ecc71; margin-top: 0;">USE #2: Making Predictions</h3>
+                <p><strong>Phase:</strong> Using the model</p>
+                <p><strong>Input:</strong> A new x value</p>
+                <p><strong>Process:</strong> Plug into y = mx + b</p>
+                <p><strong>Output:</strong> Predicted y value</p>
+            </div>
+        </div>
+
+        <div class="warning-box box">
+            <h3 style="margin-top: 0;">❌ Common Mistakes to Avoid</h3>
+            <ul>
+                <li><strong>Thinking each dot gives you a separate line</strong> → We need ONE line for all dots</li>
+                <li><strong>Adding errors without squaring</strong> → They'll cancel out and give you zero!</li>
+                <li><strong>Recalculating m and b for predictions</strong> → Once you have the equation, just use it</li>
+            </ul>
+        </div>
+
+        <div class="tip-box box">
+            <h3 style="margin-top: 0;">💡 Pro Tips</h3>
+            <ul>
+                <li>The best-fit line doesn't have to pass through ANY of the actual data points!</li>
+                <li>Linear regression works best when there's actually a linear relationship</li>
+                <li>Always plot your data first to see if a straight line makes sense</li>
+                <li>Predictions far beyond your data range are less reliable</li>
+            </ul>
+        </div>
+
+        <h2>🌍 Real-World Applications</h2>
+        <div class="grid">
+            <div class="card">
+                <div style="font-size: 2em;">📈</div>
+                <strong>Business</strong>
+                <p style="color: #666;">Sales vs ad spend</p>
+            </div>
+            <div class="card">
+                <div style="font-size: 2em;">🎓</div>
+                <strong>Education</strong>
+                <p style="color: #666;">Grades vs study hours</p>
+            </div>
+            <div class="card">
+                <div style="font-size: 2em;">💪</div>
+                <strong>Health</strong>
+                <p style="color: #666;">Weight vs exercise</p>
+            </div>
+            <div class="card">
+                <div style="font-size: 2em;">💰</div>
+                <strong>Finance</strong>
+                <p style="color: #666;">Stock trends</p>
+            </div>
+            <div class="card">
+                <div style="font-size: 2em;">🌱</div>
+                <strong>Science</strong>
+                <p style="color: #666;">Plant growth rates</p>
+            </div>
+            <div class="card">
+                <div style="font-size: 2em;">🏠</div>
+                <strong>Real Estate</strong>
+                <p style="color: #666;">Predict home prices</p>
+            </div>
+        </div>
+
+        <h2>📝 Summary: The Complete Process</h2>
+        <div style="background: #f0f4ff; padding: 25px; border-radius: 12px; border: 3px solid #667eea;">
+            <ol style="line-height: 2; font-size: 1.05em;">
+                <li><strong>Collect data</strong> → Get your (x, y) points from the real world</li>
+                <li><strong>Plot data</strong> → Put dots on a graph to visualize</li>
+                <li><strong>Calculate averages</strong> → Find x̄ and ȳ</li>
+                <li><strong>Apply formulas</strong> → Calculate m and b using linear regression</li>
+                <li><strong>Draw line</strong> → Plot y = mx + b (your best-fit line)</li>
+                <li><strong>Make predictions</strong> → Use your equation for new x values</li>
+            </ol>
+        </div>
+
+        <div style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 35px; border-radius: 15px; margin-top: 40px; text-align: center;">
+            <h2 style="color: white; margin-bottom: 15px;">🎉 Key Takeaway</h2>
+            <p style="font-size: 1.15em; line-height: 1.7;">
+                Linear regression takes <strong>messy, scattered data</strong> and finds the <strong>single best line</strong> that represents the overall pattern. This line lets you <strong>make predictions</strong> about what will happen with new data. The "best" line is the one that <strong>minimizes the total squared error</strong>!
+            </p>
+            <div style="margin-top: 25px; font-size: 2.5em;">
+                📊 → 📐 → 🎯 → 🔮
+            </div>
+            <p style="margin-top: 10px;">Data → Formula → Best Line → Predictions</p>
+        </div>
+
+        <hr style="margin: 50px 0; border: none; border-top: 3px solid #ddd; opacity: 0.5;">
+
+        <section style="background: #f5f5f5; padding: 30px; border-radius: 12px; margin-top: 40px; border-left: 5px solid #666;">
+            <h2 style="color: #333; text-align: left; border: none; padding: 0; margin: 0 0 20px 0;">📝 Quick Reference Notes</h2>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px;">
+                
+                <div>
+                    <h3 style="color: #667eea; margin-top: 0; font-size: 1.3em;">❓ What is linear regression?</h3>
+                    <p style="color: #333; line-height: 1.8;">
+                        It's a way to make a prediction based on simple information that we already have. The reason we do this is to take information we have and get a great understanding of what will continue to happen based on the data we have.
+                    </p>
+                </div>
+
+                <div>
+                    <h3 style="color: #667eea; margin-top: 0; font-size: 1.3em;">🎯 Why would someone use it?</h3>
+                    <p style="color: #333; line-height: 1.8;">
+                        <strong>Real-world example:</strong> If you have data of people working different amounts of hours along with how much they got paid and put this information into a graph, you'd probably see a trend: the more hours you work, the more you get paid.
+                    </p>
+                </div>
+
+            </div>
+
+            <div style="margin-top: 30px; background: white; padding: 25px; border-radius: 10px; border-left: 4px solid #e74c3c;">
+                <h3 style="color: #333; margin-top: 0; font-size: 1.3em;">🔧 How does it work? (Complete Process)</h3>
+                
+                <h4 style="color: #667eea; margin-top: 20px; margin-bottom: 10px;">Three Main Components:</h4>
+                <ol style="color: #333; line-height: 2;">
+                    <li><strong>Dataset</strong> - information we already have</li>
+                    <li><strong>Graph</strong> - visual representation of our data</li>
+                    <li><strong>Slope formula (y = mx + b)</strong> - the mathematical model</li>
+                    <li><strong>Trend lines</strong> - the line that best fits all our data</li>
+                </ol>
+
+                <h4 style="color: #667eea; margin-top: 20px; margin-bottom: 10px;">Step-by-Step Breakdown:</h4>
+                
+                <p style="color: #333;"><strong>📊 Step 1: Plot the Data</strong></p>
+                <p style="color: #555; margin-left: 15px;">
+                    Think of the information we have as pieces to put on a board with lines (a graph). Each piece of data is made up of two things: <code style="background: #f0f0f0; padding: 2px 5px;">x</code> and <code style="background: #f0f0f0; padding: 2px 5px;">y</code>. Example: <code style="background: #f0f0f0; padding: 2px 5px;">(x=2, y=3), (x=3, y=0.8), (x=5, y=6)</code>
+                    <br><br>Each piece tells us where to put a dot on the graph using the x (horizontal) and y (vertical) axes.
+                </p>
+
+                <p style="color: #333; margin-top: 15px;"><strong>📈 Step 2: Observe the Trend</strong></p>
+                <p style="color: #555; margin-left: 15px;">
+                    After plotting all the data, you'll probably see a trend where most dots move in one direction. This is what we want to capture with a single line.
+                </p>
+
+                <p style="color: #333; margin-top: 15px;"><strong>📐 Step 3: Understanding y = mx + b</strong></p>
+                <p style="color: #555; margin-left: 15px;">
+                    This formula tells us how to draw a line on the graph:
+                    <ul style="margin: 10px 0;">
+                        <li><strong>m (slope)</strong> = How many steps we take up (or down) for every step we take right on the x-axis. Positive m = upward line (↗️), Negative m = downward line (↘️)</li>
+                        <li><strong>b (y-intercept)</strong> = Where the line starts on the y-axis when x equals 0. This places the line at a certain height (positive or negative) at the beginning of the graph</li>
+                    </ul>
+                </p>
+
+                <p style="color: #333; margin-top: 15px;"><strong>🎯 Step 4: Calculate the Best Trend Line</strong></p>
+                <p style="color: #555; margin-left: 15px;">
+                    Based on the data on the graph, we need to find the best <code style="background: #f0f0f0; padding: 2px 5px;">m</code> and <code style="background: #f0f0f0; padding: 2px 5px;">b</code> values to create one accurate trend line that represents all our data.
+                </p>
+
+                <p style="color: #333; margin-top: 15px;"><strong>💡 What is "Loss"?</strong></p>
+                <p style="color: #555; margin-left: 15px;">
+                    Loss is a calculation that measures how "bad" a line is by looking at the vertical distance from each data dot to the trend line. We:
+                    <ul style="margin: 10px 0;">
+                        <li>Measure the distance (error) from each dot to the line</li>
+                        <li><strong>Square each error</strong> (multiply it by itself) - this makes all errors positive and punishes big errors more than small ones</li>
+                        <li>Add all squared errors together to get a total "loss" number</li>
+                    </ul>
+                    The linear regression formula finds the line with the <strong>least amount of loss</strong> - this is the best-fit line!
+                </p>
+
+                <p style="color: #333; margin-top: 15px;"><strong>🔮 Step 5: Make Predictions</strong></p>
+                <p style="color: #555; margin-left: 15px;">
+                    Once we have the best trend line with its <code style="background: #f0f0f0; padding: 2px 5px;">m</code> and <code style="background: #f0f0f0; padding: 2px 5px;">b</code> values, we can use the formula <code style="background: #f0f0f0; padding: 2px 5px;">y = mx + b</code> to predict values for any new x data we receive.
+                </p>
+
+                <p style="color: #333; margin-top: 20px;"><strong>✨ Summary:</strong></p>
+                <p style="color: #555; margin-left: 15px;">
+                    Linear regression takes the information we have, plots it, calculates loss to find the best line, and then uses that line to make predictions about what will happen with new data. And this is how we can predict things with simple data.
+                </p>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Canvas 1: Basic scatter plot with best fit line
+        const c1 = document.getElementById('canvas1').getContext('2d');
+        c1.fillStyle = '#f9f9f9';
+        c1.fillRect(0, 0, 600, 300);
+        
+        // Grid
+        c1.strokeStyle = '#eee';
+        c1.lineWidth = 1;
+        for(let i = 0; i < 600; i += 30) {
+            c1.beginPath(); c1.moveTo(i, 0); c1.lineTo(i, 300); c1.stroke();
+        }
+        for(let i = 0; i < 300; i += 30) {
+            c1.beginPath(); c1.moveTo(0, i); c1.lineTo(600, i); c1.stroke();
+        }
+        
+        // Axes
+        c1.strokeStyle = '#333';
+        c1.lineWidth = 2;
+        c1.beginPath(); c1.moveTo(50, 250); c1.lineTo(550, 250); c1.stroke();
+        c1.beginPath(); c1.moveTo(50, 250); c1.lineTo(50, 50); c1.stroke();
+        
+        // Labels
+        c1.fillStyle = '#333';
+        c1.font = 'bold 16px Arial';
+        c1.fillText('x', 540, 270);
+        c1.fillText('y', 30, 60);
+        
+        // Data points
+        const points = [[100,220], [150,200], [200,170], [250,155], [300,130], [350,110], [400,95], [450,75]];
+        c1.fillStyle = '#e74c3c';
+        points.forEach(p => {
+            c1.beginPath();
+            c1.arc(p[0], p[1], 6, 0, 2*Math.PI);
+            c1.fill();
+        });
+        
+        // Best fit line
+        c1.strokeStyle = '#667eea';
+        c1.lineWidth = 4;
+        c1.beginPath();
+        c1.moveTo(50, 245);
+        c1.lineTo(500, 60);
+        c1.stroke();
+        
+        // Annotations
+        c1.fillStyle = '#667eea';
+        c1.font = '14px Arial';
+        c1.fillText('← Best fit line', 450, 100);
+        c1.fillStyle = '#e74c3c';
+        c1.fillText('• Data points', 420, 220);
+
+        // Canvas 2: y = mx + b explanation
+        const c2 = document.getElementById('canvas2').getContext('2d');
+        c2.fillStyle = '#f9f9f9';
+        c2.fillRect(0, 0, 600, 350);
+        
+        // Grid
+        c2.strokeStyle = '#eee';
+        for(let i = 0; i < 600; i += 30) {
+            c2.beginPath(); c2.moveTo(i, 0); c2.lineTo(i, 350); c2.stroke();
+        }
+        for(let i = 0; i < 350; i += 30) {
+            c2.beginPath(); c2.moveTo(0, i); c2.lineTo(600, i); c2.stroke();
+        }
+        
+        // Axes
+        c2.strokeStyle = '#333';
+        c2.lineWidth = 2;
+        c2.beginPath(); c2.moveTo(50, 300); c2.lineTo(550, 300); c2.stroke();
+        c2.beginPath(); c2.moveTo(50, 300); c2.lineTo(50, 50); c2.stroke();
+        
+        c2.fillStyle = '#333';
+        c2.font = 'bold 16px Arial';
+        c2.fillText('x', 540, 320);
+        c2.fillText('y', 30, 60);
+        
+        // Line y = 2x + 1
+        c2.strokeStyle = '#667eea';
+        c2.lineWidth = 4;
+        c2.beginPath();
+        c2.moveTo(50, 273);
+        c2.lineTo(450, 33);
+        c2.stroke();
+        
+        // b point
+        c2.fillStyle = '#2ecc71';
+        c2.beginPath();
+        c2.arc(50, 273, 8, 0, 2*Math.PI);
+        c2.fill();
+        c2.font = 'bold 14px Arial';
+        c2.fillText('b = 1', 70, 278);
+        
+        // Slope indicator
+        c2.strokeStyle = '#e74c3c';
+        c2.lineWidth = 2;
+        c2.beginPath(); c2.moveTo(150, 193); c2.lineTo(200, 193); c2.stroke();
+        c2.beginPath(); c2.moveTo(200, 193); c2.lineTo(200, 113); c2.stroke();
+        c2.fillStyle = '#e74c3c';
+        c2.font = '12px Arial';
+        c2.fillText('1 step →', 155, 210);
+        c2.fillText('2 steps ↑', 210, 155);
+        c2.font = 'bold 12px Arial';
+        c2.fillText('(m=2)', 210, 170);
+
+        // Canvas 3: Plotting data
+        const c3 = document.getElementById('canvas3').getContext('2d');
+        c3.fillStyle = '#f9f9f9';
+        c3.fillRect(0, 0, 600, 250);
+        
+        c3.strokeStyle = '#eee';
+        for(let i = 0; i < 600; i += 30) {
+            c3.beginPath(); c3.moveTo(i, 0); c3.lineTo(i, 250); c3.stroke();
+        }
+        for(let i = 0; i < 250; i += 30) {
+            c3.beginPath(); c3.moveTo(0, i); c3.lineTo(600, i); c3.stroke();
+        }
+        
+        c3.strokeStyle = '#333';
+        c3.lineWidth = 2;
+        c3.beginPath(); c3.moveTo(50, 200); c3.lineTo(550, 200); c3.stroke();
+        c3.beginPath(); c3.moveTo(50, 200); c3.lineTo(50, 50); c3.stroke();
+        
+        const plotPoints = [[100,180,'(1,2)'], [200,140,'(3,6.2)'], [300,110,'(5,10.1)'], [400,85,'(7,14.2)']];
+        c3.fillStyle = '#e74c3c';
+        plotPoints.forEach(p => {
+            c3.beginPath();
+            c3.arc(p[0], p[1], 7, 0, 2*Math.PI);
+            c3.fill();
+            c3.font = '11px Arial';
+            c3.fillText(p[2], p[0]-15, p[1]+20);
+        });
+
+        // Canvas 4: Errors visualization
+        const c4 = document.getElementById('canvas4').getContext('2d');
+        c4.fillStyle = '#f9f9f9';
+        c4.fillRect(0, 0, 600, 300);
+        
+        c4.strokeStyle = '#eee';
+        for(let i = 0; i < 600; i += 30) {
+            c4.beginPath(); c4.moveTo(i, 0); c4.lineTo(i, 300); c4.stroke();
+        }
+        for(let i = 0; i < 300; i += 30) {
+            c4.beginPath(); c4.moveTo(0, i); c4.lineTo(600, i); c4.stroke();
+        }
+        
+        c4.strokeStyle = '#333';
+        c4.lineWidth = 2;
+        c4.beginPath(); c4.moveTo(50, 280); c4.lineTo(550, 280); c4.stroke();
+        c4.beginPath(); c4.moveTo(50, 280); c4.lineTo(50, 50); c4.stroke();
+        
+        // Line
+        c4.strokeStyle = '#667eea';
+        c4.lineWidth = 4;
+        c4.beginPath();
+        c4.moveTo(50, 270);
+        c4.lineTo(500, 80);
+        c4.stroke();
+        
+        // Points with error lines
+        const errorPoints = [
+            [150, 240, 235, '#2ecc71', 'Error = 0.5'],
+            [250, 190, 175, '#e74c3c', 'Error = -1.5'],
+            [350, 130, 138, '#2ecc71', 'Error = 0.8'],
+            [450, 100, 98, '#2ecc71', 'Error = 0.2']
+        ];
+        
+        errorPoints.forEach(p => {
+            c4.fillStyle = '#e74c3c';
+            c4.beginPath();
+            c4.arc(p[0], p[1], 7, 0, 2*Math.PI);
+            c4.fill();
+            
+            c4.strokeStyle = p[3];
+            c4.lineWidth = 3;
+            c4.setLineDash([5, 5]);
+            c4.beginPath();
+            c4.moveTo(p[0], p[1]);
+            c4.lineTo(p[0], p[2]);
+            c4.stroke();
+            c4.setLineDash([]);
+            
+            c4.fillStyle = p[3];
+            c4.font = 'bold 12px Arial';
+            c4.fillText(p[4], p[0]+10, p[1]);
+        });
+
+        // Canvas 5: Predictions
+        const c5 = document.getElementById('canvas5').getContext('2d');
+        c5.fillStyle = '#f9f9f9';
+        c5.fillRect(0, 0, 600, 300);
+        
+        c5.strokeStyle = '#eee';
+        for(let i = 0; i < 600; i += 30) {
+            c5.beginPath(); c5.moveTo(i, 0); c5.lineTo(i, 300); c5.stroke();
+        }
+        for(let i = 0; i < 300; i += 30) {
+            c5.beginPath(); c5.moveTo(0, i); c5.lineTo(600, i); c5.stroke();
+        }
+        
+        c5.strokeStyle = '#333';
+        c5.lineWidth = 2;
+        c5.beginPath(); c5.moveTo(50, 250); c5.lineTo(550, 250); c5.stroke();
+        c5.beginPath(); c5.moveTo(50, 250); c5.lineTo(50, 50); c5.stroke();
+        
+        // Old data points (faded)
+        c5.fillStyle = 'rgba(231,76,60,0.3)';
+        [[100,220], [200,170], [300,130], [400,95]].forEach(p => {
+            c5.beginPath();
+            c5.arc(p[0], p[1], 5, 0, 2*Math.PI);
+            c5.fill();
+        });
+        
+        // Line
+        c5.strokeStyle = '#667eea';
+        c5.lineWidth = 3;
+        c5.beginPath();
+        c5.moveTo(50, 245);
+        c5.lineTo(500, 60);
+        c5.stroke();
+        
+        // New prediction
+        c5.strokeStyle = '#f39c12';
+        c5.lineWidth = 2;
+        c5.setLineDash([5, 5]);
+        c5.beginPath();
+        c5.moveTo(450, 250);
+        c5.lineTo(450, 78);
+        c5.stroke();
+        c5.setLineDash([]);
+        
+        c5.fillStyle = '#f39c12';
+        c5.beginPath();
+        c5.arc(450, 78, 10, 0, 2*Math.PI);
+        c5.fill();
+        
+        c5.strokeStyle = 'white';
+        c5.lineWidth = 2;
+        c5.beginPath();
+        c5.arc(450, 78, 10, 0, 2*Math.PI);
+        c5.stroke();
+        
+        c5.fillStyle = '#f39c12';
+        c5.font = 'bold 14px Arial';
+        c5.fillText('NEW prediction!', 460, 85);
+        c5.font = '12px Arial';
+        c5.fillStyle = '#666';
+        c5.fillText('If x=9, then y≈18', 460, 100);
+        
+        c5.fillStyle = '#333';
+        c5.font = 'bold 12px Arial';
+        c5.fillText('x = 9', 430, 270);
+    </script>
+</body>
+</html>
