@@ -1,5 +1,5 @@
 corpus.txt
 tokenizer.json
 training_data.npz
-.vscode
+.vscode/
 .DS_Store
