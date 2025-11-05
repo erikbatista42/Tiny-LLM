@@ -50,3 +50,25 @@ layer1.forward(X)
 
 layer2.forward(layer1.output)
 print(layer2.output)
+
+'''
+Visual Summary:
+
+INPUT DATA (X)
+3 samples × 4 features
+    ↓
+┌──────────────────┐
+│   LAYER 1        │
+│   4 → 5 neurons  │  ← Hidden layer
+└──────────────────┘
+    ↓
+3 samples × 5 features
+    ↓
+┌──────────────────┐
+│   LAYER 2        │
+│   5 → 2 neurons  │  ← Output layer
+└──────────────────┘
+    ↓
+FINAL OUTPUT
+3 samples × 2 predictions
+'''
