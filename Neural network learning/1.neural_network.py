@@ -51,4 +51,31 @@ The formula for a single neuron's output is:
 
 This final `Output` value is then typically passed to an "activation function" (which the video mentions around [06:27](http://www.youtube.com/watch?v=tMrbN67U9d4&t=387)) to produce the neuron's final signal.
 
+---------
+
+The Neuron = A small machine with:
+1. External inputs (data flowing in from previous neurons)
+2. Internal settings/knobs (weights and biases)
+3. A computation (multiply inputs by weights, add bias)
+An output (result sent to next neurons)
+
+
+Other Neurons
+     ↓↓↓ (inputs come in)
+    ┌─────────────────┐
+    │    NEURON       │
+    │  ┌───────────┐  │
+    │  │ weights:  │  │ ← These stay inside!
+    │  │ biases:   │  │   They define THIS neuron's
+    │  │ bias      │  │   behavior
+    │  └───────────┘  │
+    │  computation:   │
+    │  output = inputs │
+    │   × weights     │
+    │   + bias        │
+    └─────────────────┘
+          ↓ (output goes out)
+    To Next Neurons
+
 '''
+
