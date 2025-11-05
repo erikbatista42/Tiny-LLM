@@ -1,0 +1,9 @@
+# Core dependencies for Tiny-LLM project
+
+# NumPy - for efficient array operations and neural network calculations
+numpy>=1.24.0
+
+# Optional but recommended for future enhancements:
+# matplotlib>=3.7.0  # For visualizing training progress
+# tqdm>=4.65.0       # For progress bars during training
+
