@@ -40,4 +40,6 @@ Why would we use the rectified linear function over the sigmoid function which a
     1. It's still granular so we can still optimize well with it.
     2. It's fast because it's a very simple calculation.
     3. It simply works.
+
+Have been learning today more about how the ReLU works with neural networks. A better and visual explanation here: https://claude.ai/public/artifacts/b10a161b-6e5e-49f9-9ba3-db5d09f8f04d
 '''
