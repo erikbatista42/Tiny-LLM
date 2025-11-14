@@ -43,3 +43,15 @@ Why would we use the rectified linear function over the sigmoid function which a
 
 Have been learning today more about how the ReLU works with neural networks. A better and visual explanation here: https://claude.ai/public/artifacts/b10a161b-6e5e-49f9-9ba3-db5d09f8f04d
 '''
+
+
+'''
+HOW SQUIGGLY LINES ARE MADE ON THE GRAPH
+The very first node is the input and the last one is the output, creating (x,y) coordinates for the graph.
+Each time the neural network runs, it creates a dot in the graph. After some runs, you may see a squiggly line if you draw it out rather than a straight line.
+
+More detailed:
+A neural network takes an input value (X) and runs it through layers of neurons. Each neuron calculates Y = (input × weight) + bias, then applies ReLU which outputs max(0, Y). In Layer 1, all 14 neurons look at the same input but produce different outputs because each has different weights and biases, causing them to "turn on" at different input values. Layer 2 takes all those Layer 1 outputs, multiplies each by its own weight, adds them together with a bias, and applies ReLU again. This process repeats until you reach the final output neuron. When you plot the input (X) against the final output (Y) for every possible input value from -3 to +3, you get a squiggly curve because neurons constantly turn on and off at different points, changing their contribution to the final output. The weights and biases control this behavior, and adjusting them changes the shape of the curve—which is exactly what "training" a neural network means: tweaking these values until the network produces the outputs you want for given inputs.
+
+Learn more here: https://claude.ai/share/4498c203-35b2-4f2c-ac9b-dc581ac94680
+'''
