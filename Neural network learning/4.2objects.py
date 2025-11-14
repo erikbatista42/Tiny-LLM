@@ -1,5 +1,8 @@
 import numpy as np
-np.random.seed(0)
+import nnfs
+from nnfs.datasets import spiral_data
+
+nnfs.init()
 
 # Capital X signals that this is our exact training data set (machine learning standard)
 X = [
@@ -8,6 +11,8 @@ X = [
     [-1.5, 2.7, 3.3, -0.8]
     ]
 # ^ We'll assume this is the input data to the neural network
+
+X, y = spiral_data(100, 3)
 
 '''
 Now we will define our 2 "hidden layers". It's called "hidden" because it sits between the input and output, and we don't directly interact with it—only the neural network does during training.
@@ -41,15 +46,22 @@ class Layer_Dense:
 
     def forward(self, inputs):
         self.output = np.dot(inputs, self.weights) + self.biases
+    
+class Activation_ReLU:
+    def forward(self, inputs):
+        self.output = np.maximum(0, inputs)
 
-layer1 = Layer_Dense(4, 5)
-layer2 = Layer_Dense(5, 2)
+
+
+
+layer1 = Layer_Dense(2, 5)
+activation1 = Activation_ReLU()
 
 layer1.forward(X)
-# print(layer1.output)
 
-layer2.forward(layer1.output)
-print(layer2.output)
+activation1.forward(layer1.output)
+print(activation1.output)
+
 
 '''
 Visual Summary:
