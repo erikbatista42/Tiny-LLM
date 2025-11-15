@@ -19,6 +19,7 @@ x = the act of applying the exponential function to some value
 This function solves our negative number issues by making sure no values can be negative
 '''
 import math
+import numpy as np
 layer_ouputs = [4.8, 1.21, 2.385]
 
 # E = 2.71828182846
@@ -40,3 +41,43 @@ for value in exp_values:
 
 print(norm_values)
 print(sum(norm_values))
+
+'''
+SOFTMAX PROCESS - STEP BY STEP
+===============================
+
+Input → Exponentiate → Normalize → Output
+
+EXAMPLE:
+--------
+Input (raw logits):
+  Dog    → [1]
+  Cat    → [2]
+  Human  → [3]
+
+Step 1: EXPONENTIATE (apply e^x to each value)
+  → [e^1]     [2.718]
+    [e^2]  =  [7.389]
+    [e^3]     [20.086]
+
+Step 2: NORMALIZE (divide each by the sum)
+  Sum = e^1 + e^2 + e^3 = 2.718 + 7.389 + 20.086 = 30.193
+
+  → [e^1 / (e^1+e^2+e^3)]     [2.718 / 30.193]     [0.09]
+    [e^2 / (e^1+e^2+e^3)]  =  [7.389 / 30.193]  =  [0.24]
+    [e^3 / (e^1+e^2+e^3)]     [20.086 / 30.193]    [0.67]
+
+OUTPUT (probabilities):
+  Dog:   9%  (0.09)
+  Cat:   24% (0.24)
+  Human: 67% (0.67)
+  
+  Total = 100% ✓
+
+The model is 67% confident the answer is "Human"!
+
+
+------
+
+When you combine step 1(exponantiation) and 2(normalization) this is what makes up the Softmax activation function.
+'''
