@@ -91,7 +91,7 @@ Low confidence + correct = High loss (Bad!)
 -log(0.01) = 4.605 <- Model was only 1% sure -> massive loss
 
 STEP 5: The magic of -log()
-As the model's confidence in the correct answer decreases, the lWhy This Works
+As the model's confidence in the correct answer decreases, the Why This Works
 ✅ Rewards confidence in correct answers (low loss)
 ✅ Punishes low confidence in correct answers (high loss)
 ✅ The penalty grows exponentially as confidence drops
