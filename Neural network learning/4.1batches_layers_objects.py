@@ -1,6 +1,5 @@
 import numpy as np
 
-
 # batch of inputs
 inputs = [
         [1, 2, 3, 2.5],
