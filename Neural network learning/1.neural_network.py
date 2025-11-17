@@ -15,7 +15,7 @@ biases = [2, 3, 0.5]
 
 
 
-print(output)
+# print(output)
 '''
 In a neuron, **inputs**, **weights**, and **bias** work together to produce an output. Here’s a breakdown of each part and how they're combined:
 

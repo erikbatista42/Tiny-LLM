@@ -1,3 +1,4 @@
+from operator import neg
 import numpy as np
 import nnfs
 from nnfs.datasets import spiral_data
@@ -50,9 +51,6 @@ class Layer_Dense:
 class Activation_ReLU:
     def forward(self, inputs):
         self.output = np.maximum(0, inputs)
-
-
-
 
 layer1 = Layer_Dense(2, 5)
 activation1 = Activation_ReLU()
