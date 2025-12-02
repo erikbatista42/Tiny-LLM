@@ -35,8 +35,6 @@ class Phase1_TensorBasics:
     @staticmethod
     def exercise_1_creating_tensors():
         """
-        TODO 1: Create tensors in different ways
-        
         Your tasks:
         a) Create a tensor from a Python list: [1, 2, 3, 4, 5]
         b) Create a 3x3 tensor of zeros
@@ -73,11 +71,11 @@ class Phase1_TensorBasics:
                           [10., 11., 12.]])  # Shape: (2, 3)
         
         # YOUR CODE HERE
-        a = None
-        b = None
-        c = None
-        d = None
-        e = None
+        a = torch.add(x,y)
+        b = torch.matmul(x,y.T)
+        c = torch.multiply(x,y)
+        d = x.sum()
+        e = x.mean(dim=1)
         
         return a, b, c, d, e
     
@@ -654,11 +652,12 @@ def test_phase1():
     assert list(d.shape) == [10], f"Exercise 1d: expected shape [10], got {list(d.shape)}"
     print("✓ Exercise 1 passed!")
 
-    return
+
     # Test exercise 2
     results = Phase1_TensorBasics.exercise_2_tensor_operations()
     assert all(r is not None for r in results), "Exercise 2 not fully implemented"
     print("✓ Exercise 2 passed!")
+    return 
     
     # Test exercise 3
     results = Phase1_TensorBasics.exercise_3_reshaping()
