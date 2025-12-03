@@ -83,26 +83,26 @@ class Phase1_TensorBasics:
     def exercise_3_reshaping():
         """
         TODO 3: Reshape tensors - crucial for transformer operations!
-        
+
         Given tensor x of shape (2, 6), perform these reshaping operations:
         a) Reshape to (3, 4)
         b) Reshape to (2, 2, 3) - adding a dimension
         c) Flatten to 1D
         d) Add a dimension at position 0: (2, 6) → (1, 2, 6) (hint: unsqueeze)
         e) Transpose dimensions 0 and 1 of a (2, 3, 4) tensor
-        
+
         Return them as a tuple: (a, b, c, d, e)
         """
         x = torch.arange(12).reshape(2, 6).float()
         x_3d = torch.arange(24).reshape(2, 3, 4).float()
-        
+
         # YOUR CODE HERE
-        a = None
-        b = None
-        c = None
-        d = None
-        e = None
-        
+        a = x.reshape(3, 4)
+        b = x.reshape(2, 2, 3)
+        c = x.flatten()
+        d = x.unsqueeze(0)
+        e = x_3d.transpose(0, 1)
+
         return a, b, c, d, e
 
 
