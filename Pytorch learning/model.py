@@ -97,13 +97,13 @@ class Phase1_TensorBasics:
         x_3d = torch.arange(24).reshape(2, 3, 4).float()
         
         # YOUR CODE HERE
-        a = None
-        b = None
-        c = None
-        d = None
-        e = None
+        a = x.reshape(3,4)
+        b = x.reshape(2,2,3)
+        c = x.flatten(0,1)
+        d = x.unsqueeze(0)
+        e = x_3d.transpose(0, 1)
         
-        return a, b, c, d, e
+        return (a, b, c, d, e)
 
 
 # =============================================================================
@@ -657,7 +657,7 @@ def test_phase1():
     results = Phase1_TensorBasics.exercise_2_tensor_operations()
     assert all(r is not None for r in results), "Exercise 2 not fully implemented"
     print("✓ Exercise 2 passed!")
-    return 
+
     
     # Test exercise 3
     results = Phase1_TensorBasics.exercise_3_reshaping()
@@ -671,6 +671,7 @@ def test_phase1():
     print("✓ Exercise 3 passed!")
     
     print("\n✅ Phase 1 complete!\n")
+
 
 
 def test_phase2():
