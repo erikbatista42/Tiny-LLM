@@ -54,7 +54,7 @@ class Phase1_TensorBasics:
     @staticmethod
     def exercise_2_tensor_operations():
         """
-        TODO 2: Practice tensor operations
+        2: Practice tensor operations
         
         Given two tensors x and y (created below), perform these operations:
         a) Element-wise addition: x + y
@@ -82,7 +82,7 @@ class Phase1_TensorBasics:
     @staticmethod
     def exercise_3_reshaping():
         """
-        TODO 3: Reshape tensors - crucial for transformer operations!
+        3: Reshape tensors - crucial for transformer operations!
         
         Given tensor x of shape (2, 6), perform these reshaping operations:
         a) Reshape to (3, 4)
@@ -122,7 +122,7 @@ class Phase2_NNModuleBasics(nn.Module):
     
     def __init__(self, input_size: int, hidden_size: int, output_size: int):
         """
-        TODO 4: Initialize a simple feed-forward network
+        4: Initialize a simple feed-forward network
         
         Create a network with:
         - A linear layer from input_size to hidden_size (call it self.fc1)
@@ -135,8 +135,9 @@ class Phase2_NNModuleBasics(nn.Module):
         super().__init__()
         
         # YOUR CODE HERE
-        self.fc1 = None
-        self.fc2 = None
+        # fc = fully connected - it's named this way because everyinput neuron is connected to every output neuron...it demonstrates the layers are "connected"
+        self.fc1 = nn.Linear(in_features=input_size, out_features=hidden_size)
+        self.fc2 = nn.Linear(in_features=hidden_size, out_features=output_size)
     
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         """
@@ -150,7 +151,12 @@ class Phase2_NNModuleBasics(nn.Module):
         Return the output tensor.
         """
         # YOUR CODE HERE
-        pass
+        x = self.fc1(x) # pass x into the input of the first hidden layer
+        x = F.relu(x) # Apply the ReLu activation function on fc1 neurons
+        x = self.fc2(x) # pass the output of the ReLu activation function into fc2
+
+        return x
+        
 
 
 # =============================================================================
@@ -812,7 +818,7 @@ def run_all_tests():
     
     try:
         test_phase1()
-        # test_phase2()
+        test_phase2()
         # test_phase3()
         # test_phase4()
         # test_phase5()
